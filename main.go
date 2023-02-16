@@ -20,13 +20,13 @@ func main() {
 	flag.Parse()
 
 	// 定时解析日志配置文件
-	go ParseLogConfigFileLiPeriod()
 
 	router := gin.Default()
 	// 加载模版文件
 	router.LoadHTMLGlob("tmpls/*")
 	// 日志查看页面
 	router.GET("/log", func(c *gin.Context) {
+		ParseLogConfigFileLiPeriod()
 		pathMd5, tailN := c.DefaultQuery(param_md5, logFiles.first), c.DefaultQuery(tail_n, "")
 		data := struct {
 			FS map[string]*LogFile
